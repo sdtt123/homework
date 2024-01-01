@@ -1,19 +1,19 @@
-typedef struct Node 
-{
-    Commodity commodity;
-    struct Node *next;//表示指向下一个Node节点指针的链表结构体
-} Node;
+#include"node.h"
 void initList(Node *list)// 新增链表初始化函数，链表指针list所指向的节点初始化，使其成为一个空链表。如果链表没有初始化，那么就没有有效的数据节点，无法进行对链表的正常操作，
 {
     list->next = NULL;
 }
+
+
 Node *createNode(Commodity commodity)//这个函数创建节点，因为插入节点前要先有节点（函数createNode，其作用是创建一个新的Node节点，并将传入的Commodity类型数据存储到新节点中。）
 {
     Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->commodity = commodity;//将传入的commodity数据赋值给新节点的commodity成员变量。
-    newNode->next = NULL;//将新节点的next指针设置为NULL，表示该节点是链表中的最后一个节点
+    newNode->commodity = commodity;
+    newNode->next = NULL;
     return newNode;
 }
+
+
 void printList(Node *headNode)
 {
     Node *pmove = headNode->next;//使用一个临时的指针变量pmove指向链表的头节点的下一个节点（即链表的第一个有效节点）。
@@ -23,9 +23,11 @@ void printList(Node *headNode)
         pmove = pmove->next;//将pmove指针指向下一个节点，继续下一次循环直至遍历完整个链表
     }
 }
+
+
 void insert(Node *headNode, Commodity commodity) //函数用于在链表尾部插入新的节点。
 {
-    Node *newNode = createNode(commodity);//先创建一个新节点newnode
+    Node *newNode = createNode(commodity);
     Node *currentNode = headNode;
     while (currentNode->next != NULL) //便利链表找到最后一个节点currentnode
     {
@@ -33,10 +35,14 @@ void insert(Node *headNode, Commodity commodity) //函数用于在链表尾部�
     }
     currentNode->next = newNode;//将新节点插到链表尾部
 }
+
+
 void add(Node *headNode, Commodity commodity) //用于向链表中添加节点
 {
     insert(headNode, commodity);
 }
+
+
 Node *find(Node *headNode, char *name)
 {
     Node *p = headNode->next;//从链表第一个节点开始，比较节点名称于指定名称是否相同
@@ -50,12 +56,16 @@ Node *find(Node *headNode, char *name)
     }
     return NULL;
 }
+
+
 void fix(Node *list, char *name, Commodity commodity) {
     Node *p = find(list, name);
     if (p != NULL) {
         p->commodity = commodity;
     }
 }
+
+
 void show(Commodity commodity) {
     printf("商品名称：%s 种类：%d", commodity.name,commodity.category);
     switch (commodity.category) 
@@ -83,6 +93,8 @@ void display(Node *list)
         p = p->next;
     }
 }
+
+
 void ask(Node *list, char *name) //顾客查询商品信息，这段代码用于在商品链表中查找并显示特定商品的信息。这是函数的声明，它接受一个指向链表的指针(`List *list`)和一个指向字符数组的指针(`char *name`)作为参数，返回类型为`void`，表示不返回任何值。
 {
     Node *p = find(list, name);//调用find函数，查找链表里是否有此商品。返回一个指向节点(`Node`)的指针，该节点包含有关查询商品的信息。这个指针被赋给变量`p`。
@@ -95,6 +107,8 @@ void ask(Node *list, char *name) //顾客查询商品信息，这段代码用于
         printf("货架无此商品：%s\n", name);
     }
 }
+
+
 void shopcart(Node *cart, Node *shelves, char *name, int quantity) 
 {
     Node *p = find(shelves, name);
@@ -117,6 +131,8 @@ void shopcart(Node *cart, Node *shelves, char *name, int quantity)
         printf("货架无此商品：%s\n", name);
     }
 }
+
+
 void check(Node *cart, Node *shelves) 
 {
     Node *p = cart->next; 
@@ -131,6 +147,8 @@ void check(Node *cart, Node *shelves)
     }
     initList(cart); 
 }
+
+
 void create(Node *list)
  {
     Commodity commodity;
@@ -142,6 +160,8 @@ void create(Node *list)
     scanf("%d", &commodity.quantity);
     add(list, commodity);
 }
+
+
 void refix(Node *list)
 {
     char name[20];
@@ -164,6 +184,8 @@ void refix(Node *list)
         printf("货架无此商品：%s\n", name);
     }
 }
+
+
 void refixquantity(Node *list)
 {
     char name[20];
@@ -180,6 +202,8 @@ void refixquantity(Node *list)
         printf("货架无此商品：%s\n", name);
     }
 }
+
+
 void showcommodity() 
 {
     printf("超市的商品管理系统\n");
